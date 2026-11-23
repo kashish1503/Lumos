@@ -1,0 +1,131 @@
+{
+  "passed": 8,
+  "total": 10,
+  "results": [
+    {
+      "command": "make it brighter",
+      "edits": {
+        "brightness": 1.5,
+        "contrast": 1.0,
+        "saturation": 1.0,
+        "warmth": 50,
+        "sharpness": 1.0
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "make it a bit darker",
+      "edits": {
+        "brightness": 0.5,
+        "contrast": 1.0,
+        "saturation": 1.0,
+        "warmth": -20,
+        "sharpness": 1.0
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "black and white",
+      "edits": {
+        "brightness": 1.0,
+        "contrast": 1.0,
+        "saturation": 0.0,
+        "warmth": -50,
+        "sharpness": 1.0
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "make it warmer",
+      "edits": {
+        "brightness": 1.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
+        "warmth": 50,
+        "sharpness": 1.0
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "cold and wintry",
+      "edits": {
+        "brightness": 1.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
+        "warmth": -50,
+        "sharpness": 1.0
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "moody",
+      "edits": {
+        "brightness": 1.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
+        "warmth": -20,
+        "sharpness": 1.0
+      },
+      "pass": false,
+      "failures": [
+        "brightness <1 (got 1.0)",
+        "contrast >1 (got 1.0)"
+      ]
+    },
+    {
+      "command": "make it pop",
+      "edits": {
+        "brightness": 1.2,
+        "contrast": 1.2,
+        "saturation": 1.3,
+        "warmth": 40,
+        "sharpness": 1.1
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "golden hour",
+      "edits": {
+        "brightness": 1.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
+        "warmth": 50,
+        "sharpness": 1.0
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "vintage film",
+      "edits": {
+        "brightness": 0.8,
+        "contrast": 0.9,
+        "saturation": 0.7,
+        "warmth": 30,
+        "sharpness": 0.9
+      },
+      "pass": true,
+      "failures": []
+    },
+    {
+      "command": "sharpen it",
+      "edits": {
+        "brightness": 1.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
+        "warmth": 0,
+        "sharpness": 1.0
+      },
+      "pass": false,
+      "failures": [
+        "sharpness >1 (got 1.0)"
+      ]
+    }
+  ]
+}
