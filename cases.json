@@ -1,0 +1,12 @@
+[
+  {"command": "make it brighter", "expect": {"brightness": ">1"}},
+  {"command": "make it a bit darker", "expect": {"brightness": "<1"}},
+  {"command": "black and white", "expect": {"saturation": "==0"}},
+  {"command": "make it warmer", "expect": {"warmth": ">0"}},
+  {"command": "cold and wintry", "expect": {"warmth": "<0"}},
+  {"command": "moody", "expect": {"brightness": "<1", "contrast": ">1"}},
+  {"command": "make it pop", "expect": {"saturation": ">1", "contrast": ">1"}},
+  {"command": "golden hour", "expect": {"warmth": ">0"}},
+  {"command": "vintage film", "expect": {"saturation": "<1", "warmth": ">0"}},
+  {"command": "sharpen it", "expect": {"sharpness": ">1"}}
+]
