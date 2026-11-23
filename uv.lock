@@ -1132,7 +1132,7 @@ requires-dist = [
     { name = "qwen-vl-utils" },
     { name = "requests" },
     { name = "torch", specifier = ">=2.4" },
-    { name = "torchvision", specifier = ">=0.29.2" },
+    { name = "torchvision" },
     { name = "transformers", specifier = "==4.57.1" },
 ]
 
