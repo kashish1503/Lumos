@@ -32,8 +32,26 @@ Examples:
 "faded retro look" -> {{"brightness": 1.0, "contrast": 0.85, "saturation": 0.7, "warmth": 20, "sharpness": 1.0}}
 "make the details crisper" -> {{"brightness": 1.0, "contrast": 1.0, "saturation": 1.0, "warmth": 0, "sharpness": 1.5}}
 "a bit cooler" -> {{"brightness": 1.0, "contrast": 1.0, "saturation": 1.0, "warmth": -10, "sharpness": 1.0}}
+"more saturated" -> {{"brightness": 1.0, "contrast": 1.0, "saturation": 1.2, "warmth": 0, "sharpness": 1.0}}
+"vibrant and punchy" -> {{"brightness": 1.0, "contrast": 1.2, "saturation": 1.3, "warmth": 0, "sharpness": 1.0}}
+"gloomy and brooding" -> {{"brightness": 0.85, "contrast": 1.2, "saturation": 0.85, "warmth": 0, "sharpness": 1.0}}
 
 User request: {command}"""
+
+SETTINGS = ("brightness", "contrast", "saturation", "warmth", "sharpness")
+EXPLICIT = re.compile(
+    r"\b(" + "|".join(SETTINGS) + r")\s*(?:to|=|:|at|of)?\s*(-?\d+(?:\.\d+)?)\b",
+    re.IGNORECASE,
+)
+
+
+def apply_explicit_values(edits: dict, command: str) -> dict:
+    """Override the model with any value the user stated outright, e.g. "set warmth to 2"."""
+    for name, value in EXPLICIT.findall(command):
+        name = name.lower()
+        edits[name] = int(float(value)) if name == "warmth" else float(value)
+    return edits
+
 
 def load_model(max_memory=None, max_pixels=512 * 28 * 28):
     """Load model + processor. bfloat16 avoids the float16 NaN crash on T4 GPUs."""
@@ -71,4 +89,7 @@ def get_edits(model, processor, image, command: str):
     )[0]
 
     match = re.search(r"\{.*\}", raw, re.DOTALL)
-    return json.loads(match.group()) if match else raw
+    if not match:
+        return raw
+    edits = json.loads(match.group())
+    return apply_explicit_values(edits, command) if isinstance(edits, dict) else edits

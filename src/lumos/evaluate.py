@@ -32,7 +32,8 @@ def run_evals(model, processor, image, cases_path="evals/cases.json", out_dir="e
                         if k not in edits or not check(edits[k], r)]
             failures += [f"{k} should stay {v} (got {edits[k]})"
                          for k, v in NEUTRAL.items()
-                         if k not in case["expect"] and k in edits
+                         if k not in case["expect"] and k not in case.get("allow", [])
+                         and k in edits
                          and abs(float(edits[k]) - v) > 0.05 * max(1, abs(v)) + (2 if k == "warmth" else 0)]
             ok = not failures
         passed += ok

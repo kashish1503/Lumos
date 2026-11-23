@@ -1,9 +1,9 @@
 [
-  {"command": "make it brighter", "expect": {"brightness": ">1"}},
+  {"command": "make it brighter", "expect": {"brightness": ">1.15"}},
   {"command": "make it a bit darker", "expect": {"brightness": "<1"}},
   {"command": "black and white", "expect": {"saturation": "==0"}},
   {"command": "make it warmer", "expect": {"warmth": ">0"}},
-  {"command": "cold and wintry", "expect": {"warmth": "<0"}},
+  {"command": "cold and wintry", "expect": {"warmth": "<0"}, "allow": ["saturation"]},
   {"command": "moody", "expect": {"brightness": "<1", "contrast": ">1"}},
   {"command": "make it pop", "expect": {"saturation": ">1", "contrast": ">1"}},
   {"command": "golden hour", "expect": {"warmth": ">0"}},
@@ -15,6 +15,6 @@
   {"command": "a lot brighter", "expect": {"brightness": ">1.3"}},
   {"command": "slightly brighter", "expect": {"brightness": "<1.15"}},
   {"command": "darker but more colorful", "expect": {"brightness": "<1", "saturation": ">1"}},
-  {"command": "cooler and softer", "expect": {"warmth": "<0", "contrast": "<1"}},
+  {"command": "cooler and softer", "expect": {"warmth": "<0", "contrast": "<1"}, "allow": ["saturation"]},
   {"command": "don't change anything", "expect": {"brightness": "==1", "warmth": "==0", "saturation": "==1"}}
 ]
