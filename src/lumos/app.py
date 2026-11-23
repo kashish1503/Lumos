@@ -1,5 +1,11 @@
 """Gradio UI for Lumos."""
 
+try:
+    import spaces
+    gpu = spaces.GPU
+except ImportError:
+    gpu = lambda f: f   # no-op on Kaggle / locally
+
 import gradio as gr
 
 from lumos.editor import apply_edits
@@ -7,6 +13,7 @@ from lumos.vlm import get_edits
 
 
 def build_app(model, processor):
+    @gpu
     def edit(image, command, chain, state):
         if image is None or not command.strip():
             raise gr.Error("Upload a photo and type a command.")
