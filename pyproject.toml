@@ -1,0 +1,19 @@
+[project]
+name = "lumos"
+version = "0.1.0"
+description = "Edit photos by talking to them, powered by a vision-language model"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.4",
+    "transformers==4.57.1",
+    "accelerate",
+    "qwen-vl-utils",
+    "pillow",
+    "requests",
+    "matplotlib",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.32,<0.12.0"]
+build-backend = "uv_build"
