@@ -8,5 +8,13 @@
   {"command": "make it pop", "expect": {"saturation": ">1", "contrast": ">1"}},
   {"command": "golden hour", "expect": {"warmth": ">0"}},
   {"command": "vintage film", "expect": {"saturation": "<1", "warmth": ">0"}},
-  {"command": "sharpen it", "expect": {"sharpness": ">1"}}
+  {"command": "sharpen it", "expect": {"sharpness": ">1"}},
+  {"command": "set warmth to 2", "expect": {"warmth": "==2"}},
+  {"command": "set warmth to 20", "expect": {"warmth": "==20"}},
+  {"command": "brightness 1.4", "expect": {"brightness": "==1.4"}},
+  {"command": "a lot brighter", "expect": {"brightness": ">1.3"}},
+  {"command": "slightly brighter", "expect": {"brightness": "<1.15"}},
+  {"command": "darker but more colorful", "expect": {"brightness": "<1", "saturation": ">1"}},
+  {"command": "cooler and softer", "expect": {"warmth": "<0", "contrast": "<1"}},
+  {"command": "don't change anything", "expect": {"brightness": "==1", "warmth": "==0", "saturation": "==1"}}
 ]

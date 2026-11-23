@@ -16,6 +16,7 @@ Return ONLY a JSON object with these keys (use neutral values if a setting shoul
 - saturation: float, 1.0 = no change (0 = black and white)
 - warmth: int, 0 = no change (-50 cooler to +50 warmer)
 - sharpness: float, 1.0 = no change
+- If the user gives an explicit number for a setting, use that exact number. Do not round or adjust it.
 
 User request: {command}"""
 
