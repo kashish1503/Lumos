@@ -9,17 +9,31 @@ from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
 MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct"
 
-PROMPT = """You are a photo editing assistant. Look at the image and the user's request.
-Return ONLY a JSON object with these keys (use neutral values if a setting shouldn't change):
-- brightness: float, 1.0 = no change (0.5 darker, 1.5 brighter)
-- contrast: float, 1.0 = no change
-- saturation: float, 1.0 = no change (0 = black and white)
-- warmth: int, 0 = no change (-50 cooler to +50 warmer)
-- sharpness: float, 1.0 = no change
-- If the user gives an explicit number for a setting, use that exact number. Do not round or adjust it.
+PROMPT = """You are a photo editing assistant. Convert the user's request into edit settings.
+Return ONLY a JSON object with exactly these 5 keys:
+brightness, contrast, saturation, sharpness (floats, 1.0 = no change) and warmth (int, 0 = no change).
+
+Step sizes:
+- "slightly" / "a bit" / "a little": change by 0.1 (warmth by 10)
+- plain request ("brighter", "warmer"): change by 0.2 (warmth by 20)
+- "a lot" / "very" / "much": change by 0.4 (warmth by 35)
+
+Rules:
+- Only change settings the request asks for or clearly implies. Every other key stays neutral.
+- Never add warmth unless the request mentions color temperature or a mood that implies it.
+- An explicit number is used exactly as given.
+- Black and white means saturation 0 and warmth 0.
+- "Softer" means lower contrast. "Crisper" or "sharpen" means sharpness above 1.
+
+Examples:
+"a little brighter" -> {{"brightness": 1.1, "contrast": 1.0, "saturation": 1.0, "warmth": 0, "sharpness": 1.0}}
+"much more contrast" -> {{"brightness": 1.0, "contrast": 1.4, "saturation": 1.0, "warmth": 0, "sharpness": 1.0}}
+"dark and dramatic" -> {{"brightness": 0.8, "contrast": 1.3, "saturation": 0.9, "warmth": 0, "sharpness": 1.0}}
+"faded retro look" -> {{"brightness": 1.0, "contrast": 0.85, "saturation": 0.7, "warmth": 20, "sharpness": 1.0}}
+"make the details crisper" -> {{"brightness": 1.0, "contrast": 1.0, "saturation": 1.0, "warmth": 0, "sharpness": 1.5}}
+"a bit cooler" -> {{"brightness": 1.0, "contrast": 1.0, "saturation": 1.0, "warmth": -10, "sharpness": 1.0}}
 
 User request: {command}"""
-
 
 def load_model(max_memory=None, max_pixels=512 * 28 * 28):
     """Load model + processor. bfloat16 avoids the float16 NaN crash on T4 GPUs."""

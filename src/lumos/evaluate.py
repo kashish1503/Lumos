@@ -16,6 +16,8 @@ def check(value, rule):
             return OPS[sym](float(value), float(rule[len(sym):]))
     raise ValueError(rule)
 
+NEUTRAL = {"brightness": 1.0, "contrast": 1.0, "saturation": 1.0,
+           "warmth": 0, "sharpness": 1.0}
 
 def run_evals(model, processor, image, cases_path="evals/cases.json", out_dir="evals/runs"):
     cases = json.loads(Path(cases_path).read_text())
@@ -28,6 +30,10 @@ def run_evals(model, processor, image, cases_path="evals/cases.json", out_dir="e
             failures = [f"{k} {r} (got {edits.get(k)})"
                         for k, r in case["expect"].items()
                         if k not in edits or not check(edits[k], r)]
+	    failures += [f"{k} should stay {v} (got {edits[k]})"
+                         for k, v in NEUTRAL.items()
+                         if k not in case["expect"] and k in edits
+                         and abs(float(edits[k]) - v) > 0.05 * max(1, abs(v)) + (2 if k == "warmth" else 0)]
             ok = not failures
         passed += ok
         results.append({"command": case["command"], "edits": edits,
